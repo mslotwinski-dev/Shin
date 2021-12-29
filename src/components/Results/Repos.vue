@@ -1,7 +1,7 @@
 <template>
-  <div v-for="(repo, index) in repositories" :key="index">
-    {{ index }} {{ repo.full_name }}
-  </div>
+  <!-- <div v-for="(repo, index) in repositories" :key="index">
+    {{ index }} {{ repo }}
+  </div> -->
   <Langs v-if="showLangs" :repositories="repositories" />
 </template>
 
@@ -11,6 +11,7 @@ import { Endpoints } from '@octokit/types'
 import Langs from './Langs.vue'
 import axios from '@/config/axios'
 import { Params } from '@/data/types'
+import { AxiosResponse } from 'axios'
 
 export default defineComponent({
   props: {
@@ -41,11 +42,17 @@ export default defineComponent({
       this.repositories = this.repositories.concat(
         await axios
           .get(`https://api.github.com/users/${org}/repos`)
-          .then((res) => {
-            this.waitingFor--
-            this.waitingFor == 0 && (this.showLangs = true)
-            return res.data
-          })
+          .then(
+            (
+              res: AxiosResponse<
+                Endpoints['GET /users/{username}/repos']['response']['data']
+              >
+            ) => {
+              this.waitingFor--
+              this.waitingFor == 0 && (this.showLangs = true)
+              return res.data.filter((repo) => !repo.fork)
+            }
+          )
       )
     }
   },
