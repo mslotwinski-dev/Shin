@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <b>details</b>
-    {{ langs }}
-    {{ sum }}
-    {{ done }}
-  </div>
+  <p>
+    <!-- <List :langs="langs" /> -->
+    <Chart :langs="langs" :key="key" />
+    {{ waitingFor }}
+  </p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Endpoints } from '@octokit/types'
-import axios from '@/config/axios'
 import { AxiosResponse } from 'axios'
+import { Endpoints } from '@octokit/types'
+import List from './Charts/List.vue'
+import Chart from './Charts/Chart.vue'
+import axios from '@/config/axios'
 
 export default defineComponent({
   props: {
@@ -25,9 +26,16 @@ export default defineComponent({
       langs: {} as {
         [key: string]: number
       },
-      sum: 0 as number,
       done: [] as string[],
+      key: 0,
     }
+  },
+  components: {
+    // List,
+    Chart,
+  },
+  mounted() {
+    this.fetchLangs()
   },
   methods: {
     async fetchLangs() {
@@ -48,9 +56,9 @@ export default defineComponent({
                     ? (this.langs[lang] =
                         this.langs[lang] + response.data[lang])
                     : (this.langs[lang] = response.data[lang])
-                  this.sum += response.data[lang]
                 })
                 this.done.push(url)
+                this.key++
               }
             }
           )

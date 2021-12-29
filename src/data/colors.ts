@@ -1,4 +1,4 @@
-export const colors = {
+export const colors: { [key: string]: string } = {
   '1C Enterprise': '#814CCC',
   ABAP: '#E8274B',
   'ABAP CDS': '#555e25',
