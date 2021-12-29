@@ -2,7 +2,6 @@
   <p>
     <!-- <List :langs="langs" /> -->
     <Chart :langs="langs" :key="key" />
-    {{ waitingFor }}
   </p>
 </template>
 
@@ -10,7 +9,7 @@
 import { defineComponent } from 'vue'
 import { AxiosResponse } from 'axios'
 import { Endpoints } from '@octokit/types'
-import List from './Charts/List.vue'
+// import List from './Charts/List.vue'
 import Chart from './Charts/Chart.vue'
 import axios from '@/config/axios'
 

@@ -1,6 +1,8 @@
 <template>
-  <User :username="params.username" />
-  <Repos :params="params" />
+  <div class="container">
+    <User :username="params.username" />
+    <Repos :params="params" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,3 +27,10 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss" scoped>
+.container {
+  width: 1200px;
+  max-width: 90vw;
+  margin: 10px auto;
+}
+</style>

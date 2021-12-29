@@ -20,14 +20,14 @@
     </div>
     <div class="header flex">
       Repositories
-      <div class="add" @click="addItem()">
+      <div class="add" @click="addItem(repositories)">
         <ic icon="times"></ic>
       </div>
     </div>
     <div class="input" v-for="(repo, index) in repositories" :key="index">
       <input
         type="text"
-        :placeholder="'#' + (index + 1)"
+        placeholder="owner/repository"
         v-model="repositories[index]"
       />
       <div class="delete" @click="removeItem(repositories, index)">
@@ -81,6 +81,7 @@ input {
   border: 3px solid gray;
   display: block;
   margin: 5px auto;
+  width: 330px;
 }
 button {
   font-family: Rubik;

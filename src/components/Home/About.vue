@@ -21,17 +21,24 @@ div {
   text-align: center;
 }
 img {
-  height: 200px;
+  width: 450px;
+  max-width: 75vw;
 }
 p {
   display: block;
   font-size: 24px;
-  padding: 5px;
+  margin: 5px;
+  @media (max-width: 700px) {
+    font-size: 20px;
+  }
 }
 b {
   display: block;
   font-weight: 500;
   padding: 5px;
   font-size: 28px;
+  @media (max-width: 700px) {
+    font-size: 23px;
+  }
 }
 </style>

@@ -3,8 +3,8 @@ import * as path from 'path'
 
 const vueConfig: ProjectOptions = {
   pwa: {
-    name: 'Genesis',
-    themeColor: '#3EA08B',
+    name: 'Shin',
+    themeColor: '#c3002f',
     appleMobileWebAppCapable: 'yes',
     workboxPluginMode: 'GenerateSW',
   },

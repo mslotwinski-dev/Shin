@@ -57,5 +57,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 div {
   width: 700px;
+  max-width: 80vw;
 }
 </style>
