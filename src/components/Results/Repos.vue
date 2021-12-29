@@ -2,11 +2,13 @@
   <div v-for="(repo, index) in repositories" :key="index">
     {{ index }} {{ repo.full_name }}
   </div>
+  <Langs :repositories="repositories" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Endpoints } from '@octokit/types'
+import Langs from './Langs.vue'
 import axios from '@/config/axios'
 import { Params } from '@/data/types'
 
@@ -16,6 +18,9 @@ export default defineComponent({
       type: Object as () => Params,
       required: true,
     },
+  },
+  components: {
+    Langs,
   },
   data() {
     return {
