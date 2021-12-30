@@ -5,6 +5,7 @@ node_modules
 vue.config.js
 
 # local env files
+.env
 .env.local
 .env.*.local
 

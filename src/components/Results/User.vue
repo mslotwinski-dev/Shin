@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Endpoints } from '@octokit/types'
-import axios from '@/config/axios'
+import axios from 'axios'
 
 export default defineComponent({
   props: {
@@ -36,11 +36,24 @@ export default defineComponent({
     }
   },
   async mounted() {
+    let token: string
+    this.$store.getters.getToken
+      ? (token = this.$store.getters.getToken)
+      : (token = process.env.VUE_APP_TOKEN)
+
     this.user = (
-      await axios.get(`https://api.github.com/users/${this.username}`)
+      await axios.get(`https://api.github.com/users/${this.username}`, {
+        headers: {
+          Authentication: `token ${token}`,
+        },
+      })
     ).data
     this.orgs = (
-      await axios.get(`https://api.github.com/users/${this.username}/orgs`)
+      await axios.get(`https://api.github.com/users/${this.username}/orgs`, {
+        headers: {
+          Authentication: `token ${token}`,
+        },
+      })
     ).data
   },
 })

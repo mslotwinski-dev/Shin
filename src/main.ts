@@ -1,7 +1,15 @@
 import { createApp } from 'vue'
+
 import App from './App.vue'
 import router from './router'
-import './registerServiceWorker'
+import store from './store'
+
 import FontAwesomeIcon from './config/FontsAwesome'
 
-createApp(App).component('ic', FontAwesomeIcon).use(router).mount('#app')
+import './registerServiceWorker'
+
+createApp(App)
+  .component('ic', FontAwesomeIcon)
+  .use(store)
+  .use(router)
+  .mount('#app')
