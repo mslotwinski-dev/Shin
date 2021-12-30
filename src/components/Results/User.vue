@@ -44,14 +44,14 @@ export default defineComponent({
     this.user = (
       await axios.get(`https://api.github.com/users/${this.username}`, {
         headers: {
-          Authentication: `token ${token}`,
+          Authorization: `token ${token}`,
         },
       })
     ).data
     this.orgs = (
       await axios.get(`https://api.github.com/users/${this.username}/orgs`, {
         headers: {
-          Authentication: `token ${token}`,
+          Authorization: `token ${token}`,
         },
       })
     ).data

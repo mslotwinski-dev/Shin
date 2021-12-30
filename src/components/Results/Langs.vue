@@ -7,11 +7,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { Endpoints } from '@octokit/types'
 // import List from './Charts/List.vue'
 import Chart from './Charts/Chart.vue'
-import axios from '@/config/axios'
 
 export default defineComponent({
   props: {
@@ -38,11 +37,20 @@ export default defineComponent({
   },
   methods: {
     async fetchLangs() {
+      let token: string
+      this.$store.getters.getToken
+        ? (token = this.$store.getters.getToken)
+        : (token = process.env.VUE_APP_TOKEN)
+
       this.langs = {}
       for (const repo of this.repositories) {
         const url = `https://api.github.com/repos/${repo.full_name}/languages`
         await axios
-          .get(url)
+          .get(url, {
+            headers: {
+              Authorization: `token ${token}`,
+            },
+          })
           .then(
             (
               response: AxiosResponse<

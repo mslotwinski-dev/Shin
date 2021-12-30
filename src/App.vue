@@ -8,10 +8,6 @@ import { defineComponent } from 'vue'
 import Navbar from './components/Navbar.vue'
 
 export default defineComponent({
-  mounted() {
-    const token = this.$store.getters.getToken
-    console.log(token)
-  },
   components: {
     Navbar,
   },

@@ -9,7 +9,7 @@
 import { defineComponent } from 'vue'
 import { Endpoints } from '@octokit/types'
 import Langs from './Langs.vue'
-import axios from '@/config/axios'
+import axios from 'axios'
 import { Params } from '@/data/types'
 import { AxiosResponse } from 'axios'
 
@@ -32,6 +32,11 @@ export default defineComponent({
     }
   },
   async mounted() {
+    let token: string
+    this.$store.getters.getToken
+      ? (token = this.$store.getters.getToken)
+      : (token = process.env.VUE_APP_TOKEN)
+
     this.waitingFor = 1
     this.params.organizations &&
       (this.waitingFor += this.params.organizations.length)
@@ -41,7 +46,11 @@ export default defineComponent({
     for (const org of this.params.organizations.concat(this.params.username)) {
       this.repositories = this.repositories.concat(
         await axios
-          .get(`https://api.github.com/users/${org}/repos`)
+          .get(`https://api.github.com/users/${org}/repos`, {
+            headers: {
+              Authorization: `token ${token}`,
+            },
+          })
           .then(
             (
               res: AxiosResponse<
