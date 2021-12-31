@@ -43,7 +43,9 @@ export default defineComponent({
     this.params.repositories &&
       (this.waitingFor += this.params.repositories.length)
 
-    for (const org of this.params.organizations.concat(this.params.username)) {
+    for (const org of [this.params.username].concat(
+      this.params.organizations
+    )) {
       this.repositories = this.repositories.concat(
         await axios
           .get(`https://api.github.com/users/${org}/repos`, {
