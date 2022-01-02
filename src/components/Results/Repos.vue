@@ -2,7 +2,7 @@
   <!-- <div v-for="(repo, index) in repositories" :key="index">
     {{ index }} {{ repo }}
   </div> -->
-  <Langs v-if="showLangs" :repositories="repositories" />
+  <Langs v-if="showLangs" :repositories="repositories" :params="params" />
 </template>
 
 <script lang="ts">

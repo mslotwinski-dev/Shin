@@ -11,9 +11,14 @@ import axios, { AxiosResponse } from 'axios'
 import { Endpoints } from '@octokit/types'
 // import List from './Charts/List.vue'
 import Chart from './Charts/Chart.vue'
+import { Params } from '@/data/types'
 
 export default defineComponent({
   props: {
+    params: {
+      type: Object as () => Params,
+      required: true,
+    },
     repositories: {
       type: Object as () => Endpoints['GET /orgs/{org}/repos']['response']['data'],
       required: true,
@@ -43,8 +48,10 @@ export default defineComponent({
         : (token = process.env.VUE_APP_TOKEN)
 
       this.langs = {}
-      for (const repo of this.repositories) {
-        const url = `https://api.github.com/repos/${repo.full_name}/languages`
+      for (const repo of this.repositories
+        .map((repo) => repo.full_name)
+        .concat(this.params.repositories)) {
+        const url = `https://api.github.com/repos/${repo}/languages`
         await axios
           .get(url, {
             headers: {
