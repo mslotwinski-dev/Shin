@@ -37,11 +37,11 @@ export default defineComponent({
       ? (token = this.$store.getters.getToken)
       : (token = process.env.VUE_APP_TOKEN)
 
-    this.waitingFor = 1
-    this.params.organizations &&
-      (this.waitingFor += this.params.organizations.length)
-    this.params.repositories &&
-      (this.waitingFor += this.params.repositories.length)
+    let requests = 1
+    if (this.params.organizations) requests += this.params.organizations.length
+    if (this.params.repositories) requests += this.params.repositories.length
+    this.waitingFor = requests
+    this.$store.commit('setAllRequests', requests)
 
     for (const org of [this.params.username].concat(
       this.params.organizations
@@ -60,6 +60,7 @@ export default defineComponent({
               >
             ) => {
               this.waitingFor--
+              this.$store.commit('pushRequest')
               this.waitingFor == 0 && (this.showLangs = true)
               return res.data.filter((repo) => !repo.fork)
             }

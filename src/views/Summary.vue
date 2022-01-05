@@ -1,4 +1,9 @@
 <template>
+  <Loading
+    :class="{
+      hide: $store.getters.getAllRequests == $store.getters.getDoneRequests,
+    }"
+  />
   <div class="container">
     <User :username="params.username" />
     <Repos :params="params" />
@@ -8,11 +13,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Params } from '@/data/types'
+import Loading from '@/components/Results/Loading.vue'
 import User from '@/components/Results/User.vue'
 import Repos from '@/components/Results/Repos.vue'
 
 export default defineComponent({
   components: {
+    Loading,
     User,
     Repos,
   },
@@ -32,5 +39,10 @@ export default defineComponent({
   width: 1200px;
   max-width: 90vw;
   margin: 10px auto;
+}
+
+.hide {
+  opacity: 0;
+  z-index: -1;
 }
 </style>

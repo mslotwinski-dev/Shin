@@ -1,8 +1,8 @@
 <template>
-  <p>
+  <div>
     <!-- <List :langs="langs" /> -->
     <Chart :langs="langs" :key="key" />
-  </p>
+  </div>
 </template>
 
 <script lang="ts">
@@ -47,10 +47,12 @@ export default defineComponent({
         ? (token = this.$store.getters.getToken)
         : (token = process.env.VUE_APP_TOKEN)
 
-      this.langs = {}
-      for (const repo of this.repositories
-        .map((repo) => repo.full_name)
-        .concat(this.params.repositories)) {
+      let array = this.repositories.map((repo) => repo.full_name)
+      if (this.params.repositories) array.concat(this.params.repositories)
+
+      this.$store.commit('setAllRequests', array.length)
+
+      for (const repo of array) {
         const url = `https://api.github.com/repos/${repo}/languages`
         await axios
           .get(url, {
@@ -74,6 +76,7 @@ export default defineComponent({
                 this.done.push(url)
                 this.key++
               }
+              this.$store.commit('pushRequest')
             }
           )
       }
