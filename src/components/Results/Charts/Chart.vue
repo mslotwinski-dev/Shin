@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ onlychart: this.$route.query.chart == 'true' }">
     <canvas></canvas>
   </div>
 </template>
@@ -58,5 +58,20 @@ export default defineComponent({
 div {
   width: 700px;
   max-width: 80vw;
+  &.onlychart {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    canvas {
+      max-height: 90vh;
+      max-width: 90vw;
+    }
+  }
 }
 </style>

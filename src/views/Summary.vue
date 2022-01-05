@@ -5,7 +5,7 @@
     }"
   />
   <div class="container">
-    <User :username="params.username" />
+    <User :username="params.username" v-if="params.chart != 'true'" />
     <Repos :params="params" />
   </div>
 </template>
@@ -29,6 +29,7 @@ export default defineComponent({
         username: this.$route.query.username,
         organizations: this.$route.query.orgs,
         repositories: this.$route.query.repos,
+        chart: this.$route.query.chart,
       } as Params,
     }
   },

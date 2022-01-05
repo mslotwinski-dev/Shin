@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar v-if="$route.query.chart != 'true'" />
   <router-view />
 </template>
 

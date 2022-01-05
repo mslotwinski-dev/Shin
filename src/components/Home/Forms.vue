@@ -34,6 +34,8 @@
         <ic icon="times"></ic>
       </div>
     </div>
+    <label>Show only chart</label>
+    <input type="checkbox" v-model="chart" />
   </form>
 </template>
 
@@ -46,6 +48,7 @@ export default defineComponent({
       username: '',
       organizations: [],
       repositories: [],
+      chart: false,
     }
   },
   methods: {
@@ -56,6 +59,7 @@ export default defineComponent({
           username: this.username,
           orgs: this.organizations,
           repos: this.repositories,
+          chart: this.chart ? 'true' : 'false',
         },
       })
     },
@@ -136,5 +140,11 @@ button {
   background-color: rgb(221, 170, 0);
   font-size: 17px;
   transform: rotate(45deg);
+}
+input[type='checkbox'] {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 0;
+  width: 40px;
 }
 </style>
