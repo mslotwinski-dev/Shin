@@ -54,31 +54,36 @@ export default defineComponent({
 
       for (const repo of array) {
         const url = `https://api.github.com/repos/${repo}/languages`
-        await axios
-          .get(url, {
-            headers: {
-              Authorization: `token ${token}`,
-            },
-          })
-          .then(
-            (
-              response: AxiosResponse<
-                Endpoints['GET /repos/{owner}/{repo}/languages']['response']['data']
-              >
-            ) => {
-              if (!this.done.includes(url)) {
-                Object.keys(response.data).forEach((lang) => {
-                  this.langs[lang]
-                    ? (this.langs[lang] =
-                        this.langs[lang] + response.data[lang])
-                    : (this.langs[lang] = response.data[lang])
-                })
-                this.done.push(url)
-                this.key++
+        try {
+          await axios
+            .get(url, {
+              headers: {
+                Authorization: `token ${token}`,
+              },
+            })
+            .then(
+              (
+                response: AxiosResponse<
+                  Endpoints['GET /repos/{owner}/{repo}/languages']['response']['data']
+                >
+              ) => {
+                if (!this.done.includes(url)) {
+                  Object.keys(response.data).forEach((lang) => {
+                    this.langs[lang]
+                      ? (this.langs[lang] =
+                          this.langs[lang] + response.data[lang])
+                      : (this.langs[lang] = response.data[lang])
+                  })
+                  this.done.push(url)
+                  this.key++
+                }
+                this.$store.commit('pushRequest')
               }
-              this.$store.commit('pushRequest')
-            }
-          )
+            )
+        } catch (e) {
+          this.key++
+          this.$store.commit('pushRequest')
+        }
       }
     },
   },
