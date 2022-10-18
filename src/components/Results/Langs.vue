@@ -57,7 +57,7 @@ export default defineComponent({
         await axios
           .get(url, {
             headers: {
-              Authorization: `token ${token}`,
+              // Authorization: `token ${token}`,
             },
           })
           .then(
