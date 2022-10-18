@@ -6,7 +6,7 @@ const store: StoreOptions<{
   doneRequests: number
 }> = {
   state: {
-    token: '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',
+    token: '',
     allRequests: 0,
     doneRequests: 0,
   },
