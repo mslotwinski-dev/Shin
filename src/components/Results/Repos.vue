@@ -50,7 +50,7 @@ export default defineComponent({
         await axios
           .get(`https://api.github.com/users/${org}/repos`, {
             headers: {
-              // Authorization: `token ${token}`,
+              // / Authorization: `token ${token}`,
             },
           })
           .then(
