@@ -48,7 +48,7 @@ export default defineComponent({
     )) {
       this.repositories = this.repositories.concat(
         await axios
-          .get(`https://api.github.com/users/${org}/repos`, {
+          .get(`https://api.github.com/users/${org}/repos?per_page=300`, {
             headers: {
               Authorization: `token ${token}`,
             },
