@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="@/assets/shin.png" />
+    <img src="@/assets/shin_light.png" draggable="false" />
     <b>Summary of your work on github</b>
     <p>Written in Vue and Gin</p>
   </div>

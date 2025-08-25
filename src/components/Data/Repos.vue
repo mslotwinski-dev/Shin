@@ -1,7 +1,4 @@
 <template>
-  <!-- <div v-for="(repo, index) in repositories" :key="index">
-    {{ index }} {{ repo }}
-  </div> -->
   <Langs v-if="showLangs" :repositories="repositories" :params="params" />
 </template>
 
@@ -37,42 +34,36 @@ export default defineComponent({
       ? (token = this.$store.getters.getToken)
       : (token = process.env.VUE_APP_TOKEN)
 
-    // policz wszystkie requesty
     let requests = 1
     if (this.params.organizations) requests += this.params.organizations.length
     if (this.params.repositories) requests += this.params.repositories.length
     this.waitingFor = requests
     this.$store.commit('setAllRequests', requests)
 
-    const allOrgs = [this.params.username, ...(this.params.organizations || [])]
-
-    await Promise.all(
-      allOrgs.map(async (org) => {
-        const url =
-          org === this.params.username
-            ? `https://api.github.com/users/${org}/repos?per_page=300`
-            : `https://api.github.com/orgs/${org}/repos?per_page=300`
-
-        try {
-          const res: AxiosResponse<
-            Endpoints['GET /users/{username}/repos']['response']['data']
-          > = await axios.get(url, {
-            headers: { Authorization: `token ${token}` },
+    for (const org of [this.params.username].concat(
+      this.params.organizations
+    )) {
+      this.repositories = this.repositories.concat(
+        await axios
+          .get(`https://api.github.com/users/${org}/repos?per_page=300`, {
+            headers: {
+              Authorization: `token ${token}`,
+            },
           })
-
-          // filtrujemy forki
-          this.repositories = this.repositories.concat(
-            res.data.filter((repo) => !repo.fork)
+          .then(
+            (
+              res: AxiosResponse<
+                Endpoints['GET /users/{username}/repos']['response']['data']
+              >
+            ) => {
+              this.waitingFor--
+              this.$store.commit('pushRequest')
+              this.waitingFor == 0 && (this.showLangs = true)
+              return res.data.filter((repo) => !repo.fork)
+            }
           )
-        } catch (e) {
-          console.error(`Błąd pobierania repozytoriów dla ${org}`, e)
-        } finally {
-          this.waitingFor--
-          this.$store.commit('pushRequest')
-          if (this.waitingFor === 0) this.showLangs = true
-        }
-      })
-    )
+      )
+    }
   },
 })
 </script>

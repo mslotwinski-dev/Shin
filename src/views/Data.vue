@@ -1,11 +1,5 @@
 <template>
-  <Loading
-    :class="{
-      hide: $store.getters.getAllRequests == $store.getters.getDoneRequests,
-    }"
-  />
   <div class="container">
-    <User :username="params.username" v-if="params.chart != 'true'" />
     <Repos :params="params" />
   </div>
 </template>
@@ -13,15 +7,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Params } from '@/data/types'
-import Loading from '@/components/Results/Loading.vue'
-import User from '@/components/Results/User.vue'
-import Repos from '@/components/Results/Repos.vue'
+import Repos from '@/components/Data/Repos.vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export default defineComponent({
   components: {
-    Loading,
-    User,
     Repos,
   },
   data(this: { $route: RouteLocationNormalizedLoaded }) {

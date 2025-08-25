@@ -1,9 +1,9 @@
 <template>
   <nav>
     <router-link to="/">
-      <img src="@/assets/shin.png" />
+      <img src="@/assets/shin.png" draggable="false" />
     </router-link>
-    <a href="https://github.com/Shin-Stats">
+    <a href="https://github.com/mslotwinski-dev/Shin">
       <ic :icon="['fab', 'github']"></ic>
     </a>
   </nav>

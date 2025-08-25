@@ -52,7 +52,7 @@ export default defineComponent({
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit(this: any) {
       this.$router.push({
         name: 'Summary',
         query: {
