@@ -11,6 +11,9 @@ export default defineComponent({
   components: {
     Navbar,
   },
+  mounted() {
+    document.title = 'Shin'
+  },
 })
 </script>
 

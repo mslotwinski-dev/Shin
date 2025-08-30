@@ -48,6 +48,7 @@ export default defineComponent({
         },
       })
     ).data
+
     this.orgs = (
       await axios.get(`https://api.github.com/users/${this.username}/orgs`, {
         headers: {
@@ -55,6 +56,8 @@ export default defineComponent({
         },
       })
     ).data
+
+    document.title = `Shin | ${this.user.name}`
   },
 })
 </script>

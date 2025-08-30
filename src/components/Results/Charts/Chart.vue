@@ -106,7 +106,7 @@ export default defineComponent({
 
       if (this.chart) {
         try {
-          this.chart.options.animation = { duration: 600 } // np. 600ms
+          this.chart.options.animation = { duration: 200 } // np. 600ms
           this.chart.data.labels = labels
           this.chart.data.datasets[0].data = dataValues
           this.chart.data.datasets[0].backgroundColor = bgColors
@@ -139,6 +139,10 @@ export default defineComponent({
             ],
           },
           options: {
+            animation: {
+              animateRotate: false,
+              animateScale: false,
+            },
             responsive: true,
             maintainAspectRatio: false,
           },

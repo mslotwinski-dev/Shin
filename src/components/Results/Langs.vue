@@ -2,9 +2,9 @@
   <div>
     <div class="important">
       <button @click="toggleIgnore" :disabled="blocked">
-        {{ ignore ? 'Ignorowane' : 'Ignoruj' }}
+        {{ ignore ? 'Pokaż języki pomocnicze' : 'Ignoruj języki pomocnicze' }}
       </button>
-      <div>Ignoruj języki pomocnicze</div>
+      <div></div>
     </div>
 
     <!-- przekazujemy filteredLangs (zawsze nowy obiekt) -->
@@ -36,14 +36,13 @@ export default defineComponent({
     return {
       langs: {} as { [key: string]: number },
       done: [] as string[],
-      ignore: false,
+      ignore: true,
       blocked: false,
     }
   },
   computed: {
-    // ZAWSZE zwracamy nowy obiekt (shallow copy), żeby prop referencja się zmieniała
     filteredLangs(): { [key: string]: number } {
-      const plain = { ...this.langs } // nowy obiekt
+      const plain = { ...this.langs }
       if (!this.ignore) return plain
 
       const ignoreSet = new Set(
@@ -56,6 +55,7 @@ export default defineComponent({
       for (const [lang, val] of Object.entries(plain)) {
         if (!ignoreSet.has(lang.trim().toLowerCase())) out[lang] = val
       }
+
       return out
     },
   },
@@ -63,13 +63,16 @@ export default defineComponent({
     toggleIgnore() {
       if (this.blocked) return
       this.ignore = !this.ignore
-      this.blocked = true
-      setTimeout(() => {
-        this.blocked = false
-      }, 1000)
+
+      // this.blocked = true
+      // setTimeout(() => {
+      //   this.blocked = false
+      // }, 1000)
     },
 
     async fetchLangs() {
+      // this.blocked = true
+
       let token: string
       this.$store.getters.getToken
         ? (token = this.$store.getters.getToken)
@@ -94,11 +97,14 @@ export default defineComponent({
 
             if (!this.done.includes(url)) {
               for (const lang of Object.keys(response.data)) {
-                // aktualizujemy reaktywnie (Vue3 proxy)
                 this.langs[lang] = (this.langs[lang] || 0) + response.data[lang]
               }
               this.done.push(url)
             }
+
+            // setTimeout(() => {
+            //   this.blocked = false
+            // }, 1000)
           } catch (e) {
             // console.error(`Błąd pobierania języków dla ${repo}`, e)
           } finally {
@@ -139,7 +145,7 @@ export default defineComponent({
     border-radius: 10px;
     background-color: #c3002f;
     color: #e3e3e3;
-    width: 120px;
+    width: 250px;
   }
 }
 </style>
