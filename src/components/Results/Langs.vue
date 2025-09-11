@@ -9,6 +9,12 @@
 
     <!-- przekazujemy filteredLangs (zawsze nowy obiekt) -->
     <Chart :langs="filteredLangs" />
+
+    <RepoList
+      v-if="Object.keys(repolangs).length > 1"
+      :repositories="repositories"
+      :langs="repolangs"
+    />
   </div>
 </template>
 
@@ -17,6 +23,7 @@ import { defineComponent } from 'vue'
 import axios, { AxiosResponse } from 'axios'
 import { Endpoints } from '@octokit/types'
 import Chart from './Charts/Chart.vue'
+import RepoList from './RepoList.vue'
 import { Params } from '@/data/types'
 import idontlikeu from '@/data/idontlikeu'
 
@@ -31,10 +38,14 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { Chart },
+  components: {
+    Chart,
+    RepoList,
+  },
   data() {
     return {
       langs: {} as { [key: string]: number },
+      repolangs: {} as { [key: string]: { [key: string]: number } },
       done: [] as string[],
       ignore: true,
       blocked: false,
@@ -98,6 +109,7 @@ export default defineComponent({
             if (!this.done.includes(url)) {
               for (const lang of Object.keys(response.data)) {
                 this.langs[lang] = (this.langs[lang] || 0) + response.data[lang]
+                this.repolangs[repo] = response.data
               }
               this.done.push(url)
             }
