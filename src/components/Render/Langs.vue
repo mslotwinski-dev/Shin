@@ -1,15 +1,14 @@
 <template>
-  <div>
+  <div class="mobileflex">
     <div class="important">
       <button @click="toggleIgnore" :disabled="blocked">
         {{ ignore ? 'Pokaż języki pomocnicze' : 'Ignoruj języki pomocnicze' }}
       </button>
       <div></div>
     </div>
-
-    <!-- przekazujemy filteredLangs (zawsze nowy obiekt) -->
-    <Chart :langs="filteredLangs" />
-
+    <div class="chartcontainer">
+      <Chart :langs="filteredLangs" />
+    </div>
     <RepoList
       v-if="Object.keys(repolangs).length > 1"
       :repositories="repositories"
@@ -20,12 +19,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios, { AxiosResponse } from 'axios'
+
 import { Endpoints } from '@octokit/types'
-import Chart from './Charts/Chart.vue'
-import RepoList from './RepoList.vue'
+
 import { Params } from '@/data/types'
 import idontlikeu from '@/data/idontlikeu'
+import { fetchLanguages } from '@/services/github'
+
+import Chart from '@/components/Charts/Chart.vue'
+import RepoList from './RepoList.vue'
 
 export default defineComponent({
   props: {
@@ -46,7 +48,6 @@ export default defineComponent({
     return {
       langs: {} as { [key: string]: number },
       repolangs: {} as { [key: string]: { [key: string]: number } },
-      done: [] as string[],
       ignore: true,
       blocked: false,
     }
@@ -64,7 +65,9 @@ export default defineComponent({
 
       const out: { [key: string]: number } = {}
       for (const [lang, val] of Object.entries(plain)) {
-        if (!ignoreSet.has(lang.trim().toLowerCase())) out[lang] = val
+        if (!ignoreSet.has(lang.trim().toLowerCase()) && val > 800) {
+          out[lang] = val
+        }
       }
 
       return out
@@ -74,65 +77,19 @@ export default defineComponent({
     toggleIgnore() {
       if (this.blocked) return
       this.ignore = !this.ignore
-
-      // this.blocked = true
-      // setTimeout(() => {
-      //   this.blocked = false
-      // }, 1000)
-    },
-
-    async fetchLangs() {
-      // this.blocked = true
-
-      let token: string
-      this.$store.getters.getToken
-        ? (token = this.$store.getters.getToken)
-        : (token = process.env.VUE_APP_TOKEN)
-
-      let array = this.repositories.map((repo) => repo.full_name)
-      if (this.params.repositories) {
-        array = array.concat(this.params.repositories)
-      }
-
-      this.$store.commit('setAllRequests', array.length)
-
-      await Promise.all(
-        array.map(async (repo) => {
-          const url = `https://api.github.com/repos/${repo}/languages`
-          try {
-            const response: AxiosResponse<
-              Endpoints['GET /repos/{owner}/{repo}/languages']['response']['data']
-            > = await axios.get(url, {
-              headers: { Authorization: `token ${token}` },
-            })
-
-            if (!this.done.includes(url)) {
-              for (const lang of Object.keys(response.data)) {
-                this.langs[lang] = (this.langs[lang] || 0) + response.data[lang]
-                this.repolangs[repo] = response.data
-              }
-              this.done.push(url)
-            }
-
-            // setTimeout(() => {
-            //   this.blocked = false
-            // }, 1000)
-          } catch (e) {
-            // console.error(`Błąd pobierania języków dla ${repo}`, e)
-          } finally {
-            this.$store.commit('pushRequest')
-          }
-        })
-      )
     },
   },
   watch: {
     repositories: {
       immediate: true,
       async handler() {
-        this.langs = {}
-        this.done = []
-        await this.fetchLangs()
+        const { langs, repolangs } = await fetchLanguages(
+          this.repositories,
+          this.params,
+          this.$store
+        )
+        this.langs = langs
+        this.repolangs = repolangs
       },
     },
   },
@@ -143,12 +100,15 @@ export default defineComponent({
 .important {
   margin-bottom: 8px;
 }
-
 .important {
   margin: 10px 0;
   display: flex;
   gap: 10px;
   align-items: center;
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+
   button {
     margin: 10px 0;
     padding: 10px 20px;
@@ -158,6 +118,16 @@ export default defineComponent({
     background-color: #c3002f;
     color: #e3e3e3;
     width: 250px;
+  }
+}
+
+.chartcontainer {
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
 </style>

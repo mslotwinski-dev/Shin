@@ -21,6 +21,7 @@ export default defineComponent({
   },
   data() {
     return {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       chart: null as any,
       buildTimer: null as number | null,
       isBuilding: false,
@@ -181,5 +182,8 @@ canvas {
   display: block;
   width: 100% !important;
   height: 550px !important;
+  @media (max-width: 600px) {
+    height: 450px !important;
+  }
 }
 </style>

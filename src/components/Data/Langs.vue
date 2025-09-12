@@ -1,9 +1,13 @@
 <template>
   <div>
-    <Chart :langs="langs" :key="key" v-if=" $store.getters.getAllRequests == $store.getters.getDoneRequests"/>
+    <Chart
+      :langs="langs"
+      :key="key"
+      v-if="$store.getters.getAllRequests == $store.getters.getDoneRequests"
+    />
 
-    {{$store.getters.getAllRequests}}
-    {{$store.getters.getDoneRequests}}
+    {{ $store.getters.getAllRequests }}
+    {{ $store.getters.getDoneRequests }}
   </div>
 </template>
 

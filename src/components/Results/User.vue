@@ -70,20 +70,33 @@ header {
   background-color: #e3e3e3;
   border-radius: 10px;
   img {
-    width: 200px;
-    height: 200px;
+    width: 175px;
+    height: 175px;
     border-radius: 50%;
     margin: 10px;
+    @media (max-width: 600px) {
+      width: 100px;
+      height: 100px;
+    }
   }
   .name {
     font-weight: 500;
     font-size: 24px;
+    @media (max-width: 600px) {
+      font-size: 21px;
+    }
   }
   .login {
     font-size: 20px;
+    @media (max-width: 600px) {
+      font-size: 18px;
+    }
   }
   .bio {
     margin: 10px 0;
+    @media (max-width: 600px) {
+      font-size: 14px;
+    }
   }
 }
 .orgs {
@@ -96,11 +109,15 @@ header {
     flex-wrap: wrap;
     margin: 10px 0;
     width: 100%;
+    gap: 10px;
+    @media (max-width: 600px) {
+      justify-content: center;
+      padding: 10px 20px;
+    }
     .org {
       display: block;
       width: 45px;
       height: 45px;
-      margin-right: 10px;
       border-radius: 7px;
       background-size: cover;
       cursor: pointer;

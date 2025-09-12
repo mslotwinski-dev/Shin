@@ -34,8 +34,6 @@
         <ic icon="times"></ic>
       </div>
     </div>
-    <label>Show only chart</label>
-    <input type="checkbox" v-model="chart" />
   </form>
 </template>
 
@@ -52,6 +50,7 @@ export default defineComponent({
     }
   },
   methods: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSubmit(this: any) {
       this.$router.push({
         name: 'Summary',
