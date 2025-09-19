@@ -33,6 +33,7 @@ export default [
   'YAML',
   'JSON',
   'HCL',
+  'Inno Setup',
 
   // Języki niszowe lub używane rzadko
   'QML',
