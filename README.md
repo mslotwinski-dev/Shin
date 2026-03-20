@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="./public/readme_icon.png" alt="Shin Logo" width="120" />
-  <h1>Shin</h1>
+  <img src="./src/assets/shin.png" alt="Shin Logo" width="500px" />
   <p><strong>Visualize your GitHub programming language usage across repositories and organizations.</strong></p>
 
   [![Vue 3](https://img.shields.io/badge/Vue-%5E3.0.0-4FC08D?logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
