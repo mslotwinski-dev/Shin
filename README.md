@@ -1,17 +1,20 @@
-# Shin
+<div align="center">
+  <img src="./public/readme_icon.png" alt="Shin Logo" width="120" />
+  <h1>Shin</h1>
+  <p><strong>Visualize your GitHub programming language usage across repositories and organizations.</strong></p>
 
-> Visualize your GitHub programming language usage across repositories and organizations.
-
-[![Vue 3](https://img.shields.io/badge/Vue-%5E3.0.0-4FC08D?logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-~4.1.5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![PWA Ready](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa)](https://web.dev/progressive-web-apps/)
+  [![Vue 3](https://img.shields.io/badge/Vue-%5E3.0.0-4FC08D?logo=vue.js&logoColor=white)](https://v3.vuejs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-~4.1.5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+  [![PWA Ready](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa)](https://web.dev/progressive-web-apps/)
+</div>
 
 ---
 
 ## Table of Contents
 
 - [About](#about)
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
@@ -29,6 +32,20 @@
 ## About
 
 **Shin** is a Progressive Web App (PWA) that connects to the GitHub API and generates an interactive pie chart of your programming language usage across all your repositories and organizations. It helps developers get a quick, at-a-glance understanding of where they spend their coding time.
+
+---
+
+## Screenshots
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/62b1aa6e-e570-461a-b95a-9cb7d346d83d" alt="Shin — Home screen" width="80%" />
+  <p><em>Home screen — enter your GitHub username, organizations, and optional access token</em></p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/58d96d88-5abf-42b4-bdda-6ece70f5f68e" alt="Shin — Language summary chart" width="80%" />
+  <p><em>Summary view — interactive pie chart showing your programming language breakdown</em></p>
+</div>
 
 ---
 
@@ -85,7 +102,7 @@ npm install
 **Development server** (with hot-reload at [http://localhost:4000](http://localhost:4000)):
 
 ```bash
-npm run serve
+npm run start
 ```
 
 **Production build** (output in the `/dist` directory):
